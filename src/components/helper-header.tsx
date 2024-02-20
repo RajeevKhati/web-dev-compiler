@@ -22,6 +22,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { toast } from "sonner";
+import { BASE_URL } from "@/utils/base-url";
 
 export const HelperHeader = () => {
   const navigate = useNavigate();
@@ -38,7 +39,7 @@ export const HelperHeader = () => {
   const handleSave = async () => {
     setLoading(true);
     try {
-      const response = await axios.post("http://localhost:3000/compiler/save", {
+      const response = await axios.post(`${BASE_URL}/compiler/save`, {
         fullCode,
       });
       navigate(`/compiler/${response.data.data}`, { replace: true });

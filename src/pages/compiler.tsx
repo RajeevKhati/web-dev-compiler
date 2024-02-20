@@ -10,6 +10,7 @@ import {
   initialLanguageState,
   updateFullCode,
 } from "@/redux/slices/language-slice";
+import { BASE_URL } from "@/utils/base-url";
 import { ApiError, handleError } from "@/utils/handle-error";
 import axios from "axios";
 import { useCallback, useEffect } from "react";
@@ -21,7 +22,7 @@ export default function Compiler() {
 
   const loadCode = useCallback(async () => {
     try {
-      const response = await axios.post(`http://localhost:3000/compiler/load`, {
+      const response = await axios.post(`${BASE_URL}/compiler/load`, {
         urlId,
       });
       dispatch(updateFullCode(response.data.data));
