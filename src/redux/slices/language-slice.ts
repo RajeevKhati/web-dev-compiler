@@ -12,9 +12,20 @@ export interface LanguageState {
 
 const initialState: LanguageState = {
   fullCode: {
-    html: "This is html",
-    css: "This is css",
-    javascript: "This is javascript",
+    html: `<html lang="en">
+    <body>
+  
+    </body>
+</html>`,
+    css: `body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background-color: #f0f0f0;
+      margin: 0;
+      padding: 0;
+}
+`,
+    javascript: "//Write javascript here",
   },
   currentLanguage: "html",
 };
