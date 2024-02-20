@@ -6,7 +6,10 @@ import {
   ResizablePanelGroup,
 } from "@/components/ui/resizable";
 import { useAppDispatch } from "@/redux/hooks";
-import { updateFullCode } from "@/redux/slices/language-slice";
+import {
+  initialLanguageState,
+  updateFullCode,
+} from "@/redux/slices/language-slice";
 import { ApiError, handleError } from "@/utils/handle-error";
 import axios from "axios";
 import { useCallback, useEffect } from "react";
@@ -30,8 +33,10 @@ export default function Compiler() {
   useEffect(() => {
     if (urlId) {
       loadCode();
+    } else {
+      dispatch(updateFullCode(initialLanguageState.fullCode));
     }
-  }, [loadCode, urlId]);
+  }, [dispatch, loadCode, urlId]);
 
   return (
     <ResizablePanelGroup direction="horizontal">

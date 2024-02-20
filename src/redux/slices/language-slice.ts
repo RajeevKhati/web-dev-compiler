@@ -1,3 +1,4 @@
+import { CSS, HTML, JAVASCRIPT } from "@/utils/language-initial-state";
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 
@@ -10,29 +11,18 @@ export interface LanguageState {
   currentLanguage: "html" | "css" | "javascript";
 }
 
-const initialState: LanguageState = {
+export const initialLanguageState: LanguageState = {
   fullCode: {
-    html: `<html lang="en">
-    <body>
-  
-    </body>
-</html>`,
-    css: `body {
-      font-family: Arial, sans-serif;
-      text-align: center;
-      background-color: #f0f0f0;
-      margin: 0;
-      padding: 0;
-}
-`,
-    javascript: "//Write javascript here",
+    html: HTML,
+    css: CSS,
+    javascript: JAVASCRIPT,
   },
   currentLanguage: "html",
 };
 
 const languageSlice = createSlice({
   name: "language",
-  initialState,
+  initialState: initialLanguageState,
   reducers: {
     changeLanguage(
       state,

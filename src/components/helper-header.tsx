@@ -1,5 +1,5 @@
-import { Loader2, Save, Share2 } from "lucide-react";
-import { Button } from "./ui/button";
+import { Code, Copy, Loader2, Save, Share2 } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import {
   Select,
   SelectContent,
@@ -11,17 +11,29 @@ import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { LanguageState, changeLanguage } from "@/redux/slices/language-slice";
 import { ApiError, handleError } from "@/utils/handle-error";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useState } from "react";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { toast } from "sonner";
 
 export const HelperHeader = () => {
   const navigate = useNavigate();
+  const { urlId } = useParams();
   const dispatch = useAppDispatch();
   const currentLanguage = useAppSelector(
     (state) => state.language.currentLanguage
   );
   const fullCode = useAppSelector((state) => state.language.fullCode);
   const [loading, setLoading] = useState(false);
+
+  const showShareButton = !!urlId;
 
   const handleSave = async () => {
     setLoading(true);
@@ -35,6 +47,11 @@ export const HelperHeader = () => {
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleCopyClick = () => {
+    window.navigator.clipboard.writeText(window.location.href);
+    toast("URL copied to clipboard!!");
   };
 
   return (
@@ -58,10 +75,37 @@ export const HelperHeader = () => {
             </>
           )}
         </Button>
-        <Button className="flex items-center gap-1" variant="secondary">
-          <Share2 size={16} />
-          Share
-        </Button>
+        {showShareButton ? (
+          <Dialog>
+            <DialogTrigger className="justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-secondary text-secondary-foreground shadow-sm hover:bg-secondary/80 h-9 px-4 py-2 flex items-center gap-1">
+              <Share2 size={16} />
+              Share
+            </DialogTrigger>
+            <DialogContent className="p-4">
+              <DialogHeader>
+                <DialogTitle className="flex justify-center items-center gap-2 mb-3">
+                  <Code size={20} />
+                  Share your code
+                </DialogTitle>
+                <DialogDescription className="flex flex-col gap-2 items-center">
+                  <div className="flex gap-2 w-full">
+                    <input
+                      type="text"
+                      disabled
+                      className="w-full p-2 rounded bg-slate-800 text-slate-400 select-none"
+                      value={window.location.href}
+                    />
+                    <Button variant="outline" onClick={handleCopyClick}>
+                      <Copy size={16} />
+                    </Button>
+                  </div>
+
+                  <p>Share this URL to collaborate!!</p>
+                </DialogDescription>
+              </DialogHeader>
+            </DialogContent>
+          </Dialog>
+        ) : null}
       </div>
       <div className="flex items-center gap-1">
         <small>Current Language:</small>

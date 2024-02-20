@@ -1,7 +1,9 @@
+import { toast } from "sonner";
+
 export interface ApiError {
-  error: string;
+  response: { data: { error: string } };
 }
 
 export const handleError = (error: ApiError) => {
-  console.log(error);
+  toast("Error: " + error.response.data.error);
 };

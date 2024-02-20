@@ -3,7 +3,7 @@ import { tags as t } from "@lezer/highlight";
 import { draculaInit } from "@uiw/codemirror-theme-dracula";
 import { loadLanguage } from "@uiw/codemirror-extensions-langs";
 import { useCallback } from "react";
-import { HelperHeader } from "./helper-header";
+import { HelperHeader } from "@/components/helper-header";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { updateCode } from "@/redux/slices/language-slice";
 
@@ -28,7 +28,7 @@ function CodeEditor() {
       <HelperHeader />
       <CodeMirror
         value={code}
-        height="100vh"
+        height="calc(100dvh - 60px - 50px)"
         extensions={[loadLanguage(currentLanguage)!]}
         onChange={onChange}
         theme={draculaInit({
