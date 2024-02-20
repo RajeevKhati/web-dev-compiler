@@ -43,8 +43,12 @@ const languageSlice = createSlice({
     updateCode(state, action: PayloadAction<string>) {
       state.fullCode[state.currentLanguage] = action.payload;
     },
+    updateFullCode(state, action: PayloadAction<LanguageState["fullCode"]>) {
+      state.fullCode = action.payload;
+    },
   },
 });
 
-export const { changeLanguage, updateCode } = languageSlice.actions;
+export const { changeLanguage, updateCode, updateFullCode } =
+  languageSlice.actions;
 export default languageSlice.reducer;
